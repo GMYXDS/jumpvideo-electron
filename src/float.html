@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>悬浮窗</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      -webkit-app-region: drag;
+      overflow: hidden;
+    }
+    .title-bar {
+      display: flex;
+      justify-content: space-between;
+      /* align-items: center; */
+      padding: 5px 5px 0 5px;
+      background-color: #d7d7d7;
+      color: #000000;
+      -webkit-app-region: drag;
+      font-size: 12px;
+      height: 21px;
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5px;
+      /* -webkit-app-region: no-drag; */
+    }
+    .button {
+      width: 80%;
+      padding: 5px;
+      margin: 5px 0;
+      background-color: #409eff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      -webkit-app-region: no-drag;
+      user-select: none;
+    }
+    .button:hover {
+      background-color: #c548bc;
+    }
+    #toggle-top-btn{
+      -webkit-app-region: no-drag;
+    }
+    #close-btn{
+      -webkit-app-region: no-drag;
+    }
+    #toggle-top-btn .svg{
+      width: 20px;
+      height: 15px;
+      position: fixed;
+      right: 21px;
+      top: 6px;
+      /* rotate: 45deg; */
+      display: block;
+      -webkit-app-region: no-drag;
+    }
+    #toggle-top-btn .svg svg{
+      height: 100%;
+      width: 100%;
+    }
+    #close-btn .svg{
+      width: 25px;
+      height: 18px;
+      position: fixed;
+      right: 0px;
+      top: 5px;
+      display: block;
+      -webkit-app-region: no-drag;
+    }
+    #close-btn .svg svg{
+      height: 100%;
+      width: 100%;
+    }
+    .title_bar{
+      display: flex;
+      /* flex-direction: row-reverse; */
+    }
+    .title_bar button{
+      border:none;
+    }
+  </style>
+</head>
+<body>
+  <div class="title-bar">
+    <span>悬浮窗</span>
+    <div class="title_bar">
+      <div id="toggle-top-btn">
+        <div class="svg">
+          <svg t="1715813917949" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2616" width="32" height="32"><path d="M951.296 424.96L1024 352.256 671.744 0 599.04 72.704l70.144 70.656-168.96 168.96a296.96 296.96 0 0 0-286.72 75.264L143.36 458.24 72.704 387.584 0 460.8l245.248 245.248-139.776 139.776 72.704 72.704 140.288-140.288L563.2 1024l72.704-72.704-70.144-70.656 70.144-70.144a296.96 296.96 0 0 0 75.776-287.232l168.96-168.96z" fill="#333333" p-id="2617"></path></svg>
+        </div>
+      </div>
+      <div id="close-btn">
+        <div class="svg">
+          <svg t="1715813567738" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1485" width="32" height="32"><path d="M512 977.454545a462.289455 462.289455 0 0 1-329.122909-136.331636C1.442909 659.642182 1.442909 364.311273 182.877091 182.877091 270.754909 94.952727 387.630545 46.545455 512 46.545455s241.198545 48.407273 329.169455 136.331636c181.387636 181.434182 181.387636 476.765091 0 658.245818A462.568727 462.568727 0 0 1 512 977.454545z m0-861.090909a393.029818 393.029818 0 0 0-279.784727 115.898182c-154.205091 154.251636-154.205091 405.271273 0 559.522909A393.309091 393.309091 0 0 0 512 907.636364a393.309091 393.309091 0 0 0 279.784727-115.851637c154.205091-154.251636 154.205091-405.271273 0-559.522909A393.076364 393.076364 0 0 0 512 116.363636z m176.872727 572.509091a34.909091 34.909091 0 0 0 0-49.384727l-304.407272-304.407273A34.909091 34.909091 0 1 0 335.080727 384.465455l304.407273 304.407272a34.816 34.816 0 0 0 49.384727 0z m-304.407272 0l304.407272-304.407272a34.909091 34.909091 0 1 0-49.384727-49.384728l-304.407273 304.407273A34.909091 34.909091 0 1 0 384.465455 688.872727z" fill="#231815" p-id="1486"></path></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="buttons">
+    <button class="button" id="btn1">获取链接</button>
+    <button class="button" id="btn2">获取截图</button>
+    <button class="button" id="btn3">截图编辑</button>
+    <button class="button" id="btn4">AB 片段</button>
+    <button class="button" id="btn5">AB 循环</button>
+  </div>
+
+  <script>
+    // const { ipcRenderer } = require('electron');
+    let rotate_flag = true;
+    document.querySelector('#close-btn .svg').addEventListener('click', () => {
+      console.log('close-float-window');
+      window.electron.ipcRenderer.send('close-float-window');
+    });
+    let svg_top = document.querySelector('#toggle-top-btn .svg svg')
+    document.querySelector('#toggle-top-btn .svg').addEventListener('click', () => {
+      console.log('toggle-always-on-top');
+      if(rotate_flag){
+        rotate_flag = false;
+        svg_top.style.rotate = '45deg'
+      }else{
+        rotate_flag = true;
+        svg_top.style.rotate = '0deg'
+      }
+      window.electron.ipcRenderer.send('toggle-always-on-top');
+    });
+
+    const buttons = document.querySelectorAll('.button');
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        console.log(`Button ${index + 1} clicked`);
+        if(index==0)window.electron.ipcRenderer.send('shortcut_link');
+        else if(index==1)window.electron.ipcRenderer.send('shortcut_img');
+        else if(index==2)window.electron.ipcRenderer.send('shortcut_img_edit');
+        else if(index==3)window.electron.ipcRenderer.send('shortcut_ab');
+        else if(index==4)window.electron.ipcRenderer.send('shortcut_ab_circle');
+      });
+    });
+    // 拦截右键事件，防止弹出默认右键菜单
+    window.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+html,body {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  /* 禁止选中文本 */
+  /* user-select: none;  */
+}
+.title_bar {
+  -webkit-app-region: drag;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+
+  background-color: white;
+  border-radius: 20px;
+
+  overflow: hidden; /* 防止滚动和元素溢出窗口 */
+}
+
+/* 设置选中区域背景颜色 */
+*::selection {
+  background-color: #faedc7;
+}
+
+/* 隐藏滚动条 */
+*::-webkit-scrollbar{
+  display: none;
+}
+
+/* 去除输入框聚焦时的清空图标 */
+input::-webkit-search-cancel-button {
+  display: none;
+}

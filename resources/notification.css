@@ -1,0 +1,70 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+#beep {
+  width: 0;
+  height: 0;
+}
+
+#notification {
+  height: 65px;
+  width: 345px;
+  margin: 0;
+  position: relative;
+  font-family: Helvetica, Arial, sans-serif;
+  background-image: linear-gradient(#e9ebef, #e9ebef);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 55px 1fr 25px;
+  align-content: center;
+}
+
+#notification.noIcon {
+  grid-template-columns: 15px 1fr 25px;
+}
+#icon {
+  border-radius: 3px;
+  width: 32px;
+  height: 32px;
+  margin-left: 13px;
+}
+
+#notification .message {
+  text-overflow: clip;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#title {
+  font-size: 12px;
+  color: #333;
+  font-weight: bold;
+  padding: 0;
+}
+#message {
+  font-size: 12px;
+  color: #666;
+  font-weight: normal;
+  padding-bottom: 4px;
+  padding-top: 2px;
+}
+
+.close-btn {
+  position: relative;
+  cursor: pointer;
+}
+#close-icon {
+  position: absolute;
+  top: -10px;
+  right: 5px;
+}
